@@ -1,6 +1,29 @@
-# Lovable Stock
+# Desenvolvimento de Software 26.2 - Estoques e Insumos
 
-crie um aplicativo de estoque e insumos medicos que mostre a quantidade de itens, insumos, validade (e na validade sinalize o que está perto de acabar e que deve ser usado imediatamente),  sinalize os insumos e itens que preciso para os procedimentos, sinalize o quanto eu uso por mês, calcular o quanto eu consumo e a validade e quantidade no estoque para começar a sinalização de um processo de compras
+## 🌐 Protótipo Interativo (Lovable)
+
+Para validar a interface de usuário (UI), a experiência de navegação (UX) e as principais regras de negócio do sistema de **Gestão de Estoque de Insumos**, foi desenvolvido um protótipo funcional na plataforma **Lovable**.
+
+[![Lovable Demo](https://img.shields.io/badge/Lovable-Acessar%20Prot%C3%B3tipo-ff69b4?style=for-the-badge&logo=react)](https://estoque-insumos-ds26-2.lovable.app)
+
+👉 **Acesse a aplicação em tempo real:** [https://estoque-insumos-ds26-2.lovable.app](https://estoque-insumos-ds26-2.lovable.app)
+
+---
+
+### ✨ Principais Funcionalidades Demonstradas
+
+- **📦 Controle de Insumos:** Visualização e organização de itens do estoque com filtros e busca rápida.
+- **📊 Painel de Indicadores:** Dashboard resumido para acompanhamento do status e alertas de estoque.
+- **🔄 Movimentação de Estoque:** Simulação dos fluxos de entrada e saída de insumos.
+- **💻 Interface Responsiva:** Layout adaptável para uso em computadores e dispositivos móveis.
+
+---
+
+### 🚀 Como Testar o Protótipo
+
+1. Acesse o link: [https://estoque-insumos-ds26-2.lovable.app](https://estoque-insumos-ds26-2.lovable.app)
+2. Explore as telas do painel e a listagem de insumos.
+3. Simule as ações de navegação e interações disponíveis na interface.
 
 This project was built with [Lovable](https://lovable.dev).
 
