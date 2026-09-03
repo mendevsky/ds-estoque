@@ -1,6 +1,6 @@
 import { AlertTriangle, CalendarClock, CheckCircle2, Clock3, PackageX } from "lucide-react";
 import { StatusBadge } from "@/components/StatusBadge";
-import type { InsumoCalculado, NivelEstoque, NivelValidade } from "@/data/inventory";
+import { formatMeses, nivelValidade, type NivelEstoque } from "@/lib/estoque";
 
 export function EstoqueBadge({ nivel }: { nivel: NivelEstoque }) {
   if (nivel === "critico")
@@ -22,7 +22,14 @@ export function EstoqueBadge({ nivel }: { nivel: NivelEstoque }) {
   );
 }
 
-export function ValidadeBadge({ nivel, dias }: { nivel: NivelValidade; dias: number }) {
+export function ValidadeBadge({ dias }: { dias: number }) {
+  const nivel = nivelValidade(dias);
+  if (!isFinite(dias))
+    return (
+      <StatusBadge tone="neutral">
+        <CalendarClock className="size-3.5" /> sem validade
+      </StatusBadge>
+    );
   if (nivel === "vencido")
     return (
       <StatusBadge tone="critical">
@@ -48,25 +55,15 @@ export function ValidadeBadge({ nivel, dias }: { nivel: NivelValidade; dias: num
   );
 }
 
-export function formatData(iso: string) {
-  return new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" });
-}
-
-export function formatMeses(m: number) {
-  if (!isFinite(m)) return "—";
-  return `${m.toFixed(1)} meses`;
-}
-
-export function CoberturaBar({ item }: { item: InsumoCalculado }) {
-  const pct = Math.min(100, (item.mesesRestantes / 3) * 100);
-  const tone =
-    item.nivelEstoque === "critico" ? "bg-critical" : item.nivelEstoque === "atencao" ? "bg-warning" : "bg-success";
+export function CoberturaBar({ meses, nivel }: { meses: number; nivel: NivelEstoque }) {
+  const pct = Math.min(100, (Math.min(meses, 6) / 3) * 100);
+  const tone = nivel === "critico" ? "bg-critical" : nivel === "atencao" ? "bg-warning" : "bg-success";
   return (
     <div className="min-w-28">
       <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
         <div className={`h-full rounded-full ${tone}`} style={{ width: `${Math.max(4, pct)}%` }} />
       </div>
-      <span className="mt-1 block text-xs text-muted-foreground">{formatMeses(item.mesesRestantes)}</span>
+      <span className="mt-1 block text-xs text-muted-foreground">{formatMeses(meses)}</span>
     </div>
   );
 }
