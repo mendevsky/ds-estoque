@@ -14,16 +14,332 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      clinicas: {
+        Row: {
+          cidade: string
+          created_at: string
+          id: string
+          nome: string
+        }
+        Insert: {
+          cidade?: string
+          created_at?: string
+          id?: string
+          nome: string
+        }
+        Update: {
+          cidade?: string
+          created_at?: string
+          id?: string
+          nome?: string
+        }
+        Relationships: []
+      }
+      insumos: {
+        Row: {
+          categoria: string
+          clinica_id: string
+          codigo_barras: string | null
+          consumo_mensal_estimado: number
+          created_at: string
+          estoque_minimo: number
+          id: string
+          localizacao: string
+          nome: string
+          unidade: string
+        }
+        Insert: {
+          categoria?: string
+          clinica_id: string
+          codigo_barras?: string | null
+          consumo_mensal_estimado?: number
+          created_at?: string
+          estoque_minimo?: number
+          id?: string
+          localizacao?: string
+          nome: string
+          unidade?: string
+        }
+        Update: {
+          categoria?: string
+          clinica_id?: string
+          codigo_barras?: string | null
+          consumo_mensal_estimado?: number
+          created_at?: string
+          estoque_minimo?: number
+          id?: string
+          localizacao?: string
+          nome?: string
+          unidade?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "insumos_clinica_id_fkey"
+            columns: ["clinica_id"]
+            isOneToOne: false
+            referencedRelation: "clinicas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lotes: {
+        Row: {
+          clinica_id: string
+          created_at: string
+          id: string
+          insumo_id: string
+          lote: string
+          quantidade: number
+          validade: string | null
+        }
+        Insert: {
+          clinica_id: string
+          created_at?: string
+          id?: string
+          insumo_id: string
+          lote?: string
+          quantidade?: number
+          validade?: string | null
+        }
+        Update: {
+          clinica_id?: string
+          created_at?: string
+          id?: string
+          insumo_id?: string
+          lote?: string
+          quantidade?: number
+          validade?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lotes_clinica_id_fkey"
+            columns: ["clinica_id"]
+            isOneToOne: false
+            referencedRelation: "clinicas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lotes_insumo_id_fkey"
+            columns: ["insumo_id"]
+            isOneToOne: false
+            referencedRelation: "insumos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      movimentacoes: {
+        Row: {
+          clinica_id: string
+          created_at: string
+          id: string
+          insumo_id: string
+          localizacao: string
+          lote_id: string | null
+          observacao: string
+          procedimento_id: string | null
+          quantidade: number
+          tipo: string
+          user_id: string | null
+        }
+        Insert: {
+          clinica_id: string
+          created_at?: string
+          id?: string
+          insumo_id: string
+          localizacao?: string
+          lote_id?: string | null
+          observacao?: string
+          procedimento_id?: string | null
+          quantidade?: number
+          tipo?: string
+          user_id?: string | null
+        }
+        Update: {
+          clinica_id?: string
+          created_at?: string
+          id?: string
+          insumo_id?: string
+          localizacao?: string
+          lote_id?: string | null
+          observacao?: string
+          procedimento_id?: string | null
+          quantidade?: number
+          tipo?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "movimentacoes_clinica_id_fkey"
+            columns: ["clinica_id"]
+            isOneToOne: false
+            referencedRelation: "clinicas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movimentacoes_insumo_id_fkey"
+            columns: ["insumo_id"]
+            isOneToOne: false
+            referencedRelation: "insumos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movimentacoes_lote_id_fkey"
+            columns: ["lote_id"]
+            isOneToOne: false
+            referencedRelation: "lotes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "movimentacoes_procedimento_id_fkey"
+            columns: ["procedimento_id"]
+            isOneToOne: false
+            referencedRelation: "procedimentos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      procedimento_itens: {
+        Row: {
+          clinica_id: string
+          id: string
+          insumo_id: string
+          procedimento_id: string
+          quantidade: number
+        }
+        Insert: {
+          clinica_id: string
+          id?: string
+          insumo_id: string
+          procedimento_id: string
+          quantidade?: number
+        }
+        Update: {
+          clinica_id?: string
+          id?: string
+          insumo_id?: string
+          procedimento_id?: string
+          quantidade?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "procedimento_itens_clinica_id_fkey"
+            columns: ["clinica_id"]
+            isOneToOne: false
+            referencedRelation: "clinicas"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "procedimento_itens_insumo_id_fkey"
+            columns: ["insumo_id"]
+            isOneToOne: false
+            referencedRelation: "insumos"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "procedimento_itens_procedimento_id_fkey"
+            columns: ["procedimento_id"]
+            isOneToOne: false
+            referencedRelation: "procedimentos"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      procedimentos: {
+        Row: {
+          clinica_id: string
+          created_at: string
+          descricao: string
+          id: string
+          nome: string
+        }
+        Insert: {
+          clinica_id: string
+          created_at?: string
+          descricao?: string
+          id?: string
+          nome: string
+        }
+        Update: {
+          clinica_id?: string
+          created_at?: string
+          descricao?: string
+          id?: string
+          nome?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "procedimentos_clinica_id_fkey"
+            columns: ["clinica_id"]
+            isOneToOne: false
+            referencedRelation: "clinicas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          clinica_id: string | null
+          created_at: string
+          id: string
+          nome: string
+        }
+        Insert: {
+          clinica_id?: string | null
+          created_at?: string
+          id: string
+          nome?: string
+        }
+        Update: {
+          clinica_id?: string | null
+          created_at?: string
+          id?: string
+          nome?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_clinica_id_fkey"
+            columns: ["clinica_id"]
+            isOneToOne: false
+            referencedRelation: "clinicas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      current_clinica: { Args: never; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_superuser: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "superuser" | "gestor" | "tecnico"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +466,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["superuser", "gestor", "tecnico"],
+    },
   },
 } as const
